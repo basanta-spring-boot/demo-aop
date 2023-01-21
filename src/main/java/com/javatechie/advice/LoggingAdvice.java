@@ -4,9 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
@@ -32,21 +30,28 @@ public class LoggingAdvice {
 
     /**
      * combine multiple pointcut with || or &&
-     * **/
+     **/
     @Pointcut("execution(* com.javatechie.controller.OrderController.*(..)) || execution(* com.javatechie.service.OrderService.*(..))")
     private void log() {
     }
 
 
-
-
     //  @Before(value = "execution(* com.javatechie.*.*.*(..))")
     // @Before(value = "execution(* com.javatechie.controller.*.*(..))")
-    @Before("log() ")
+//    @Before("log() ")
     public void logRequest(JoinPoint joinPoint) throws JsonProcessingException {
         System.out.println("kind : "+joinPoint.getKind());
         System.out.println("target : "+joinPoint.getTarget());
         log.info(" Method Executed !  {}", joinPoint.getSignature().getName());
         log.info(" Allowed execution for {}", new ObjectMapper().writeValueAsString(joinPoint.getArgs()));
     }
+
+    // @AfterReturning("log()")
+   // @After("log()")
+    public void logResponse(JoinPoint joinPoint) throws JsonProcessingException {
+        log.info(" Method execution started !  {}", joinPoint.getSignature());
+        log.info(" Response body {}", new ObjectMapper().writeValueAsString(joinPoint.getArgs()));
+    }
+
+
 }

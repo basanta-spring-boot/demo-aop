@@ -17,6 +17,9 @@ public class OrderController {
 
     @PostMapping
     public Order saveOrder(@RequestBody OrderRequestDTO<Order> requestDTO) {
+//        if(requestDTO.getPayload().getQty()<1){
+//            throw new RuntimeException("qty should be at least 1");
+//        }
         return service.saveOrder(requestDTO.getPayload());
     }
 
