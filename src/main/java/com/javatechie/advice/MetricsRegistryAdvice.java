@@ -17,7 +17,7 @@ public class MetricsRegistryAdvice {
     @Autowired
     private ObservationRegistry registry;
 
-    @AfterReturning(value = "execution(* com.javatechie.controller.OrderController.*(..))")
+   // @AfterReturning(value = "execution(* com.javatechie.controller.OrderController.*(..))")
     public void sendMetrics(JoinPoint joinPoint){
     log.info("metrics creation started..");
         Observation.createNotStarted(joinPoint.getSignature().getName(), registry)
