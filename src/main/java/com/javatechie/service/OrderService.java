@@ -1,5 +1,6 @@
 package com.javatechie.service;
 
+import com.javatechie.annotation.LogRequestAndResponse;
 import com.javatechie.entity.Order;
 import com.javatechie.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class OrderService {
     public List<Order> getOrders() {
         return repository.findAll();
     }
-
+    @LogRequestAndResponse
     public Order getOrder(Integer id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order not found"));

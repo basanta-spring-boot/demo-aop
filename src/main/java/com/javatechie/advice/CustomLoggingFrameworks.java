@@ -19,7 +19,8 @@ public class CustomLoggingFrameworks {
 
     }
 
-    @Around(value = "logFor()")
+    //@Around(value = "logFor()")
+    @Around("@annotation(com.javatechie.annotation.LogRequestAndResponse)")
     public Object logRequestAndResponse(ProceedingJoinPoint pjp) throws Throwable {
         log.info(" Before Execution started !  {}", pjp.getSignature());
         log.info(" Request body {}", new ObjectMapper().writeValueAsString(pjp.getArgs()));

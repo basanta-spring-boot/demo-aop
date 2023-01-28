@@ -1,5 +1,7 @@
 package com.javatechie.controller;
 
+import com.javatechie.annotation.LogRequestAndResponse;
+import com.javatechie.annotation.TrackExecutionTime;
 import com.javatechie.dto.OrderRequestDTO;
 import com.javatechie.entity.Order;
 import com.javatechie.service.OrderService;
@@ -16,6 +18,8 @@ public class OrderController {
     private OrderService service;
 
     @PostMapping
+    @LogRequestAndResponse
+    @TrackExecutionTime
     public Order saveOrder(@RequestBody OrderRequestDTO<Order> requestDTO) {
         if (requestDTO.getPayload().getQty() < 1) {
             throw new RuntimeException("qty should be at least 1");
@@ -27,6 +31,7 @@ public class OrderController {
     }
 
     @GetMapping
+    @TrackExecutionTime
     public List<Order> getOrders() {
         return service.getOrders();
     }
@@ -37,6 +42,7 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
+    @LogRequestAndResponse
     public Order updateOrder(@PathVariable Integer id, @RequestBody OrderRequestDTO<Order> requestDTO) {
         return service.updateOrder(id, requestDTO.getPayload());
     }
